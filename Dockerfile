@@ -1,9 +1,13 @@
-FROM nginx:alpine
+FROM busybox
+
 LABEL maintainer="Jeroen Pardon"
 
-RUN apk add nano
+WORKDIR /opt/html
+
+COPY . /opt/html
 
 EXPOSE 80
-VOLUME /usr/share/nginx/html
 
-COPY . /usr/share/nginx/html
+VOLUME /opt/html
+
+ENTRYPOINT [ "httpd", "-f", "-v", "-u", "1000" ]
